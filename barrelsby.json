@@ -1,0 +1,11 @@
+{
+  "directory": "src",
+  "delete": true,
+  "exclude": [
+    "^.*/__.+__/.+\\.tsx?$",
+    "^.+\\.(spec|test)\\.tsx?$",
+    "^.*/internal/.+\\.tsx?$",
+    "^.+\\.internal\\.tsx?$"
+  ],
+  "location": "all"
+}

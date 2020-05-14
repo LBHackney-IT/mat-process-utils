@@ -1,0 +1,14 @@
+.github/CODEOWNERS
+.next/
+node_modules/
+
+/bin/
+/dist/
+/src/**/index.ts
+/tmp/
+
+LICENCE
+*.snap
+.*
+!.*.*
+!.*/

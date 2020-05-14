@@ -1,0 +1,20 @@
+{
+  "exclude": [
+    "src/**/index.ts",
+    "**/node_modules/**/*",
+    "**/__*__/**/*",
+    "**/*.spec.*",
+    "**/*.test.*",
+    "**/*.setup.*",
+    "**/internal/**/*",
+    "**/*.internal.*"
+  ],
+  "excludePrivate": true,
+  "gitRevision": "master",
+  "includeDeclarations": true,
+  "listInvalidSymbolLinks": true,
+  "mode": "modules",
+  "name": "Manage a Tenancy process utils",
+  "out": "tmp/docs/",
+  "theme": "default"
+}

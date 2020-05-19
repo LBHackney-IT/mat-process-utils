@@ -9,7 +9,12 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "jsx": "react",
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "lbh-frontend-react/*": ["./node_modules/lbh-frontend-react/dist/esm/*"],
+      "remultiform/*": ["./node_modules/remultiform/dist/esm/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["**/node_modules/**/*"]

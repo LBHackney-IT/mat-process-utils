@@ -4,8 +4,6 @@
     "module": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

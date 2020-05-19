@@ -7,6 +7,7 @@ const sharedExtends = [
 ];
 const sharedPrettierExtends = ["prettier", "prettier/react"];
 const sharedRules = {
+  "react/prop-types": "off",
   "react-hooks/rules-of-hooks": "error",
   "react-hooks/exhaustive-deps": "warn",
   "jsdoc/no-types": "error",

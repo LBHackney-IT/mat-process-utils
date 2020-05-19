@@ -22,6 +22,13 @@ module.exports = {
   plugins: [...sharedPlugins],
   extends: [...sharedExtends, ...sharedPrettierExtends],
   rules: { ...sharedRules },
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: "module",
+    ecmaFeatures: {
+      modules: true,
+    },
+  },
   settings: {
     jsdoc: {
       mode: "typescript",

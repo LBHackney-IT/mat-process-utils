@@ -34,9 +34,15 @@
     "preversion": "npm install && npm test && bin/check-git"
   },
   "peerDependencies": {
+    "next": "^9.3.6",
     "react": ">= 16"
   },
-  "dependencies": {},
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "lbh-frontend-react": "0.0.14",
+    "querystring": "^0.2.0",
+    "remultiform": "^0.2.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
@@ -54,6 +60,7 @@
     "@types/react-test-renderer": "^16.9.2",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "barrelsby": "^2.2.0",
     "codeowners-enforcer": "^1.0.3",
     "core-js-bundle": "^3.6.5",
@@ -65,6 +72,7 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "husky": "^4.2.5",
     "jest": "^25.5.4",
+    "next": "^9.3.6",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "react": "^16.13.1",

@@ -14,6 +14,7 @@
 ![TypeScript version](https://img.shields.io/npm/dependency-version/mat-process-utils/dev/typescript?style=for-the-badge)
 
 ![Supported React versions](https://img.shields.io/npm/dependency-version/mat-process-utils/peer/react?style=for-the-badge)
+![Supported Next versions](https://img.shields.io/npm/dependency-version/mat-process-utils/peer/next?style=for-the-badge)
 
 Reusable steps and tools for Manage a Tenancy processes
 

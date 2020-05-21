@@ -1,7 +1,7 @@
 import { TestNamedSchema } from "../../__fixtures__/TestNamedSchema";
 import { makeSupportNeeds, SupportNeedsKey } from "./makeSupportNeeds";
 
-it("should return correctly", () => {
+it("returns correctly", () => {
   expect(
     makeSupportNeeds<
       TestNamedSchema,

@@ -2,7 +2,7 @@ import React from "react";
 import { TestNamedSchema } from "../../__fixtures__/TestNamedSchema";
 import { HealthKey, makeHealth } from "./makeHealth";
 
-it("should return correctly", () => {
+it("returns correctly", () => {
   expect(
     makeHealth<
       TestNamedSchema,

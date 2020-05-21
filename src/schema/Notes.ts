@@ -1,6 +1,6 @@
 export interface Note {
   value: string;
-  isPostVisitAction: boolean;
+  isPostVisitAction?: boolean;
   createdAt?: string;
 }
 

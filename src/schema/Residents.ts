@@ -1,4 +1,10 @@
+export interface Resident {
+  id: string;
+  fullName: string;
+  dateOfBirth: string;
+}
+
 export interface Residents {
-  tenants: { id: string; fullName: string }[];
-  householdMembers: { id: string; fullName: string }[];
+  tenants: Resident[];
+  householdMembers: Resident[];
 }

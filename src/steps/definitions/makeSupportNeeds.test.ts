@@ -54,6 +54,66 @@ it("should return correctly", () => {
   ).toMatchInlineSnapshot(`
     Object {
       "heading": "Support needs",
+      "review": Object {
+        "rows": Array [
+          Object {
+            "label": "Resident Sustainment",
+            "values": Object {
+              "resident-sustainment": Object {
+                "renderValue": [Function],
+              },
+            },
+          },
+          Object {
+            "label": "Befriending",
+            "values": Object {
+              "befriending": Object {
+                "renderValue": [Function],
+              },
+            },
+          },
+          Object {
+            "label": "Adult Safeguarding",
+            "values": Object {
+              "adult-safeguarding": Object {
+                "renderValue": [Function],
+              },
+            },
+          },
+          Object {
+            "label": "Children's Safeguarding",
+            "values": Object {
+              "childrens-safeguarding": Object {
+                "renderValue": [Function],
+              },
+            },
+          },
+          Object {
+            "label": "Domestic Violence & Sexual Abuse",
+            "values": Object {
+              "domestic-violence": Object {
+                "renderValue": [Function],
+              },
+            },
+          },
+          Object {
+            "label": "Mental Health - aged 18-65",
+            "values": Object {
+              "mental-health-18-65": Object {
+                "renderValue": [Function],
+              },
+            },
+          },
+          Object {
+            "label": "Mental Health - Over-65",
+            "values": Object {
+              "mental-health-over-65": Object {
+                "renderValue": [Function],
+              },
+            },
+          },
+        ],
+      },
       "step": Object {
         "componentWrappers": Array [
           ComponentWrapper {

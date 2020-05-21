@@ -1,7 +1,7 @@
 import formatDate from "date-fns/format";
-import { Checkboxes, List, Textarea } from "lbh-frontend-react/components";
+import { Checkboxes, List, Textarea } from "lbh-frontend-react";
 import React from "react";
-import { DynamicComponentControlledProps } from "remultiform/component-wrapper";
+import { DynamicComponentControlledProps } from "remultiform";
 import { Notes } from "../schema/Notes";
 import { Details } from "./Details";
 

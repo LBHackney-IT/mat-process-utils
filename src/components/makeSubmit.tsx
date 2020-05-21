@@ -1,5 +1,5 @@
 import React from "react";
-import { SubmitProps, submitPropTypes } from "remultiform/step";
+import { SubmitProps } from "remultiform";
 import { SubmitButtonProps, SubmitButtons } from "./SubmitButtons";
 
 export const makeSubmit = <Slug extends string>(

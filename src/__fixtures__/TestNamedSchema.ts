@@ -1,4 +1,4 @@
-import { NamedSchema } from "remultiform/database";
+import { NamedSchema } from "remultiform";
 
 export type TestNamedSchema = NamedSchema<
   string,

@@ -1,6 +1,6 @@
 import { Checkboxes as LBHCheckboxes, CheckboxItem } from "lbh-frontend-react";
 import React from "react";
-import { DynamicComponentControlledProps } from "remultiform/component-wrapper";
+import { DynamicComponentControlledProps } from "remultiform";
 
 export type CheckboxesProps = DynamicComponentControlledProps<string[]> & {
   name: string;

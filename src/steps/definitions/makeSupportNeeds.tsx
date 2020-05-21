@@ -4,9 +4,11 @@ import {
   ComponentDatabaseMap,
   ComponentWrapper,
   DynamicComponent,
+  NamedSchema,
+  Schema,
   StaticComponent,
-} from "remultiform/component-wrapper";
-import { NamedSchema, Schema, StoreNames } from "remultiform/database";
+  StoreNames,
+} from "remultiform";
 import { makeSubmit } from "../../components/makeSubmit";
 import {
   PostVisitActionInputDetails,

@@ -2,10 +2,12 @@ import React from "react";
 import {
   ComponentDatabaseMap,
   ComponentDatabaseMapOptions,
-} from "remultiform/component-wrapper";
-import { NamedSchema, Schema, StoreNames } from "remultiform/database";
-import { DatabaseContext } from "remultiform/database-context";
-import { StepDefinition } from "remultiform/step";
+  DatabaseContext,
+  NamedSchema,
+  Schema,
+  StepDefinition,
+  StoreNames,
+} from "remultiform";
 
 interface BaseStepDefinition<
   DBNamedSchema extends NamedSchema<string, number, Schema>,

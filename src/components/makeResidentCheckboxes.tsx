@@ -1,7 +1,7 @@
 import { Paragraph } from "lbh-frontend-react";
 import React from "react";
 import { UseAsyncReturn } from "react-async-hook";
-import { DynamicComponentControlledProps } from "remultiform/component-wrapper";
+import { DynamicComponentControlledProps } from "remultiform";
 import { Residents } from "../schema/Residents";
 import { Checkboxes } from "./Checkboxes";
 

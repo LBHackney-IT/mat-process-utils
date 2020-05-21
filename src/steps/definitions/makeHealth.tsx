@@ -5,8 +5,10 @@ import {
   ComponentValue,
   ComponentWrapper,
   DynamicComponent,
-} from "remultiform/component-wrapper";
-import { NamedSchema, Schema, StoreNames } from "remultiform/database";
+  NamedSchema,
+  Schema,
+  StoreNames,
+} from "remultiform";
 import { Checkboxes } from "../../components/Checkboxes";
 import { makeResidentCheckboxes } from "../../components/makeResidentCheckboxes";
 import { makeSubmit } from "../../components/makeSubmit";

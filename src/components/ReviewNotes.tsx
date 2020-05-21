@@ -1,6 +1,6 @@
 import formatDate from "date-fns/format";
 import React from "react";
-import { Notes } from "src/schema/Notes";
+import { Notes } from "../schema/Notes";
 
 export interface ReviewNotesProps {
   notes: Notes;

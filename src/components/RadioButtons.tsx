@@ -1,6 +1,6 @@
 import { RadioButton, Radios } from "lbh-frontend-react";
 import React from "react";
-import { DynamicComponentControlledProps } from "remultiform/component-wrapper";
+import { DynamicComponentControlledProps } from "remultiform";
 
 export type RadioButtonsProps = DynamicComponentControlledProps<string> & {
   name: string;

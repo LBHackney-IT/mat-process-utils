@@ -42,6 +42,7 @@
     "date-fns": "^2.14.0",
     "lbh-frontend-react": "0.0.14",
     "querystring": "^0.2.0",
+    "react-async-hook": "^3.6.1",
     "remultiform": "^0.2.0",
     "styled-jsx": "^3.3.0"
   },

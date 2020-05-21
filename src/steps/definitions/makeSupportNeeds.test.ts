@@ -1,17 +1,10 @@
-import { NamedSchema } from "remultiform/database";
-import { Notes } from "../../schema/Notes";
+import { TestNamedSchema } from "../../__fixtures__/TestNamedSchema";
 import { makeSupportNeeds, SupportNeedsKey } from "./makeSupportNeeds";
-
-type DBNamedSchema = NamedSchema<
-  string,
-  number,
-  { store: { key: string; value: { notes: Notes } } }
->;
 
 it("should return correctly", () => {
   expect(
     makeSupportNeeds<
-      DBNamedSchema,
+      TestNamedSchema,
       "store",
       "slug-a" | "slug-b" | "slug-repeat-a" | "slug-repeat-b"
     >({
@@ -23,31 +16,31 @@ it("should return correctly", () => {
       componentDatabaseMaps: {
         [SupportNeedsKey.ResidentSustainment]: {
           storeName: "store",
-          property: "notes",
+          property: "value",
         },
         [SupportNeedsKey.Befriending]: {
           storeName: "store",
-          property: "notes",
+          property: "value",
         },
         [SupportNeedsKey.AdultSafeguarding]: {
           storeName: "store",
-          property: "notes",
+          property: "value",
         },
         [SupportNeedsKey.ChildSafeguarding]: {
           storeName: "store",
-          property: "notes",
+          property: "value",
         },
         [SupportNeedsKey.DomesticViolence]: {
           storeName: "store",
-          property: "notes",
+          property: "value",
         },
         [SupportNeedsKey.MentalHealth18To65]: {
           storeName: "store",
-          property: "notes",
+          property: "value",
         },
         [SupportNeedsKey.MentalHealthOver65]: {
           storeName: "store",
-          property: "notes",
+          property: "value",
         },
       },
     })
@@ -138,7 +131,7 @@ it("should return correctly", () => {
             "databaseMap": ComponentDatabaseMap {
               "key": [Function],
               "property": Array [
-                "notes",
+                "value",
               ],
               "storeName": "store",
             },
@@ -153,7 +146,7 @@ it("should return correctly", () => {
             "databaseMap": ComponentDatabaseMap {
               "key": [Function],
               "property": Array [
-                "notes",
+                "value",
               ],
               "storeName": "store",
             },
@@ -168,7 +161,7 @@ it("should return correctly", () => {
             "databaseMap": ComponentDatabaseMap {
               "key": [Function],
               "property": Array [
-                "notes",
+                "value",
               ],
               "storeName": "store",
             },
@@ -183,7 +176,7 @@ it("should return correctly", () => {
             "databaseMap": ComponentDatabaseMap {
               "key": [Function],
               "property": Array [
-                "notes",
+                "value",
               ],
               "storeName": "store",
             },
@@ -198,7 +191,7 @@ it("should return correctly", () => {
             "databaseMap": ComponentDatabaseMap {
               "key": [Function],
               "property": Array [
-                "notes",
+                "value",
               ],
               "storeName": "store",
             },
@@ -213,7 +206,7 @@ it("should return correctly", () => {
             "databaseMap": ComponentDatabaseMap {
               "key": [Function],
               "property": Array [
-                "notes",
+                "value",
               ],
               "storeName": "store",
             },
@@ -228,7 +221,7 @@ it("should return correctly", () => {
             "databaseMap": ComponentDatabaseMap {
               "key": [Function],
               "property": Array [
-                "notes",
+                "value",
               ],
               "storeName": "store",
             },

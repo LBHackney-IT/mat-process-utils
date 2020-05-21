@@ -12,6 +12,7 @@ import {
   PostVisitActionInputDetails,
   PostVisitActionInputDetailsProps,
 } from "../../components/PostVisitActionInputDetails";
+import { ReviewNotes } from "../../components/ReviewNotes";
 import { getKeyFromSlug } from "../../helpers/getKeyFromSlug";
 import { Notes } from "../../schema/Notes";
 import {
@@ -431,6 +432,108 @@ export const makeSupportNeeds = <
           }),
         })
       ),
+    ],
+  },
+  review: {
+    rows: [
+      {
+        label: "Resident Sustainment",
+        values: {
+          "resident-sustainment": {
+            renderValue(notes: Notes): React.ReactNode {
+              if (notes.length === 0) {
+                return;
+              }
+
+              return <ReviewNotes notes={notes} />;
+            },
+          },
+        },
+      },
+      {
+        label: "Befriending",
+        values: {
+          befriending: {
+            renderValue(notes: Notes): React.ReactNode {
+              if (notes.length === 0) {
+                return;
+              }
+
+              return <ReviewNotes notes={notes} />;
+            },
+          },
+        },
+      },
+      {
+        label: "Adult Safeguarding",
+        values: {
+          "adult-safeguarding": {
+            renderValue(notes: Notes): React.ReactNode {
+              if (notes.length === 0) {
+                return;
+              }
+
+              return <ReviewNotes notes={notes} />;
+            },
+          },
+        },
+      },
+      {
+        label: "Children's Safeguarding",
+        values: {
+          "childrens-safeguarding": {
+            renderValue(notes: Notes): React.ReactNode {
+              if (notes.length === 0) {
+                return;
+              }
+
+              return <ReviewNotes notes={notes} />;
+            },
+          },
+        },
+      },
+      {
+        label: "Domestic Violence & Sexual Abuse",
+        values: {
+          "domestic-violence": {
+            renderValue(notes: Notes): React.ReactNode {
+              if (notes.length === 0) {
+                return;
+              }
+
+              return <ReviewNotes notes={notes} />;
+            },
+          },
+        },
+      },
+      {
+        label: "Mental Health - aged 18-65",
+        values: {
+          "mental-health-18-65": {
+            renderValue(notes: Notes): React.ReactNode {
+              if (notes.length === 0) {
+                return;
+              }
+
+              return <ReviewNotes notes={notes} />;
+            },
+          },
+        },
+      },
+      {
+        label: "Mental Health - Over-65",
+        values: {
+          "mental-health-over-65": {
+            renderValue(notes: Notes): React.ReactNode {
+              if (notes.length === 0) {
+                return;
+              }
+
+              return <ReviewNotes notes={notes} />;
+            },
+          },
+        },
+      },
     ],
   },
 });

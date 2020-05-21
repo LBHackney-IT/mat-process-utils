@@ -437,9 +437,9 @@ export const makeSupportNeeds = <
   review: {
     rows: [
       {
-        label: "Resident Sustainment",
+        label: "Resident sustainment",
         values: {
-          "resident-sustainment": {
+          [SupportNeedsKey.ResidentSustainment]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -453,7 +453,7 @@ export const makeSupportNeeds = <
       {
         label: "Befriending",
         values: {
-          befriending: {
+          [SupportNeedsKey.Befriending]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -465,9 +465,9 @@ export const makeSupportNeeds = <
         },
       },
       {
-        label: "Adult Safeguarding",
+        label: "Adult safeguarding",
         values: {
-          "adult-safeguarding": {
+          [SupportNeedsKey.AdultSafeguarding]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -479,9 +479,9 @@ export const makeSupportNeeds = <
         },
       },
       {
-        label: "Children's Safeguarding",
+        label: "Children's and young people's safeguarding",
         values: {
-          "childrens-safeguarding": {
+          [SupportNeedsKey.ChildSafeguarding]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -493,9 +493,9 @@ export const makeSupportNeeds = <
         },
       },
       {
-        label: "Domestic Violence & Sexual Abuse",
+        label: "Domestic violence & sexual abuse",
         values: {
-          "domestic-violence": {
+          [SupportNeedsKey.DomesticViolence]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -507,9 +507,9 @@ export const makeSupportNeeds = <
         },
       },
       {
-        label: "Mental Health - aged 18-65",
+        label: "Mental health - aged 18-65",
         values: {
-          "mental-health-18-65": {
+          [SupportNeedsKey.MentalHealth18To65]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -521,9 +521,9 @@ export const makeSupportNeeds = <
         },
       },
       {
-        label: "Mental Health - Over-65",
+        label: "Mental health - over 65",
         values: {
-          "mental-health-over-65": {
+          [SupportNeedsKey.MentalHealthOver65]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;

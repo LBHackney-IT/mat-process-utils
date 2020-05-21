@@ -57,7 +57,7 @@ it("should return correctly", () => {
       "review": Object {
         "rows": Array [
           Object {
-            "label": "Resident Sustainment",
+            "label": "Resident sustainment",
             "values": Object {
               "resident-sustainment": Object {
                 "renderValue": [Function],
@@ -73,7 +73,7 @@ it("should return correctly", () => {
             },
           },
           Object {
-            "label": "Adult Safeguarding",
+            "label": "Adult safeguarding",
             "values": Object {
               "adult-safeguarding": Object {
                 "renderValue": [Function],
@@ -81,15 +81,15 @@ it("should return correctly", () => {
             },
           },
           Object {
-            "label": "Children's Safeguarding",
+            "label": "Children's and young people's safeguarding",
             "values": Object {
-              "childrens-safeguarding": Object {
+              "child-safeguarding": Object {
                 "renderValue": [Function],
               },
             },
           },
           Object {
-            "label": "Domestic Violence & Sexual Abuse",
+            "label": "Domestic violence & sexual abuse",
             "values": Object {
               "domestic-violence": Object {
                 "renderValue": [Function],
@@ -97,7 +97,7 @@ it("should return correctly", () => {
             },
           },
           Object {
-            "label": "Mental Health - aged 18-65",
+            "label": "Mental health - aged 18-65",
             "values": Object {
               "mental-health-18-65": Object {
                 "renderValue": [Function],
@@ -105,7 +105,7 @@ it("should return correctly", () => {
             },
           },
           Object {
-            "label": "Mental Health - Over-65",
+            "label": "Mental health - over 65",
             "values": Object {
               "mental-health-over-65": Object {
                 "renderValue": [Function],

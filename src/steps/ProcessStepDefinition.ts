@@ -60,7 +60,7 @@ export type ProcessStepDefinition<
   | TitledStepDefinition<DBSchema, StoreName>
   | HeadedStepDefinition<DBSchema, StoreName>;
 
-export interface MakeStaticProcessStepDefinitionConfig<Slug extends string> {
+export interface MakeStaticProcessStepDefinitionOptions<Slug extends string> {
   basePath: string;
   stepSlugs: Slug[];
   repeatingStepSlugs: Slug[];
@@ -68,12 +68,12 @@ export interface MakeStaticProcessStepDefinitionConfig<Slug extends string> {
   nextSlug: Slug;
 }
 
-export interface MakeDynamicProcessStepDefinitionConfig<
+export interface MakeDynamicProcessStepDefinitionOptions<
   DBNamedSchema extends NamedSchema<string, number, Schema>,
   StoreName extends StoreNames<DBNamedSchema["schema"]>,
   ComponentKey extends string,
   Slug extends string
-> extends MakeStaticProcessStepDefinitionConfig<Slug> {
+> extends MakeStaticProcessStepDefinitionOptions<Slug> {
   componentDatabaseMaps: {
     [key in ComponentKey]: {
       storeName: ComponentDatabaseMapOptions<

@@ -16,7 +16,7 @@ import { ReviewNotes } from "../../components/ReviewNotes";
 import { getKeyFromSlug } from "../../helpers/getKeyFromSlug";
 import { Notes } from "../../schema/Notes";
 import {
-  MakeDynamicProcessStepDefinitionConfig,
+  MakeDynamicProcessStepDefinitionOptions,
   ProcessStepDefinition,
 } from "../ProcessStepDefinition";
 import { StepTitle } from "../StepTitle";
@@ -43,7 +43,7 @@ export const makeSupportNeeds = <
   slug,
   nextSlug,
   componentDatabaseMaps,
-}: MakeDynamicProcessStepDefinitionConfig<
+}: MakeDynamicProcessStepDefinitionOptions<
   DBNamedSchema,
   StoreName,
   SupportNeedsKey,

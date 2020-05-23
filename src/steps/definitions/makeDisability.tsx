@@ -18,8 +18,8 @@ import { Notes } from "../../schema/Notes";
 import { Resident, Residents } from "../../schema/Residents";
 import { yesNoRadios } from "../helpers/yesNoRadios";
 import {
-  MakeDynamicProcessStepDefinitionOptions,
-  ProcessStepDefinition,
+  ComponentProcessStepDefinition,
+  MakeComponentProcessStepDefinitionOptions,
 } from "../ProcessStepDefinition";
 import { StepTitle } from "../StepTitle";
 
@@ -32,6 +32,28 @@ export enum DisabilityKey {
   WhoDLA = "who-dla",
 }
 
+interface Disability {
+  present?: string;
+  who?: string[];
+  notes?: Notes;
+  pipOrDLA?: string;
+  whoPIP?: string[];
+  whoDLA?: string[];
+}
+
+interface ResidentDisability {
+  [id: string]:
+    | {
+        what?: string[];
+      }
+    | undefined;
+}
+
+type ResidentDisabilities = {
+  id: string;
+  disabilities: string[] | undefined;
+}[];
+
 export const disabilityQuestions = {
   [DisabilityKey.Present]: "Does anyone in the household have a disability?",
   [DisabilityKey.Who]: "Who has a disability?",
@@ -41,7 +63,7 @@ export const disabilityQuestions = {
   [DisabilityKey.WhoDLA]: "Who gets DLA?",
 };
 
-export const disabilityCheckboxes = [
+export const whatDisabilityCheckboxes = [
   {
     label: "Hearing",
     value: "hearing",
@@ -92,40 +114,185 @@ export const disabilityCheckboxes = [
   },
 ];
 
-export type ResidentDisabilities = {
-  id: string;
-  disabilities: string[] | undefined;
-}[];
+export interface DisabilityStepProps {
+  loading?: boolean;
+  residents: Resident[];
+  disability: Disability;
+  onDisabilityChange(disability: Disability): void;
+  residentDisability: ResidentDisability;
+  onResidentDisabilityChange(residentDisability: ResidentDisability): void;
+  ResidentCheckboxes: ReturnType<typeof makeResidentCheckboxes>;
+}
+
+const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
+  props
+) => {
+  const {
+    loading,
+    residents,
+    disability,
+    onDisabilityChange,
+    residentDisability,
+    onResidentDisabilityChange,
+    ResidentCheckboxes,
+  } = props;
+
+  const disabledResidents = residents.filter((resident) =>
+    disability.who?.includes(resident.id)
+  );
+
+  const disabled = loading || false;
+
+  return (
+    <>
+      <RadioButtons
+        name="present"
+        legend={
+          <FieldsetLegend>
+            {disabilityQuestions[DisabilityKey.Present]}
+          </FieldsetLegend>
+        }
+        radios={yesNoRadios}
+        disabled={disabled}
+        required={false}
+        value={disability.present || ""}
+        onValueChange={(present): void => {
+          onDisabilityChange({ present });
+        }}
+      />
+
+      {disability.present === "yes" && (
+        <>
+          <ResidentCheckboxes
+            name="who"
+            legend={
+              <FieldsetLegend>
+                {disabilityQuestions[DisabilityKey.Who]}
+              </FieldsetLegend>
+            }
+            disabled={disabled}
+            required={false}
+            value={disability.who || []}
+            onValueChange={(who): void => {
+              onDisabilityChange({ who });
+            }}
+          />
+
+          {loading
+            ? "Loading..."
+            : disabledResidents.map(({ id, fullName }) => (
+                <Checkboxes
+                  key={id}
+                  name={`what-${id}`}
+                  legend={
+                    <FieldsetLegend>How is {fullName} disabled?</FieldsetLegend>
+                  }
+                  checkboxes={whatDisabilityCheckboxes}
+                  disabled={disabled}
+                  required={false}
+                  value={(residentDisability || {})[id]?.what || []}
+                  onValueChange={(what): void => {
+                    onResidentDisabilityChange({ [id]: { what } });
+                  }}
+                />
+              ))}
+
+          <RadioButtons
+            name="pip-or-dla"
+            legend={
+              <FieldsetLegend>
+                {disabilityQuestions[DisabilityKey.PIPOrDLA]}
+              </FieldsetLegend>
+            }
+            radios={yesNoRadios}
+            disabled={disabled}
+            required={false}
+            value={disability.pipOrDLA || ""}
+            onValueChange={(pipOrDLA): void => {
+              onDisabilityChange({ pipOrDLA });
+            }}
+          />
+
+          {disability.pipOrDLA === "yes" && (
+            <>
+              <ResidentCheckboxes
+                name="who-pip"
+                legend={
+                  <FieldsetLegend>
+                    {disabilityQuestions[DisabilityKey.WhoPIP]}
+                  </FieldsetLegend>
+                }
+                disabled={disabled}
+                required={false}
+                value={disability.whoPIP || []}
+                onValueChange={(whoPIP): void => {
+                  onDisabilityChange({ whoPIP });
+                }}
+              />
+
+              <ResidentCheckboxes
+                name="who-dla"
+                legend={
+                  <FieldsetLegend>
+                    {disabilityQuestions[DisabilityKey.WhoDLA]}
+                  </FieldsetLegend>
+                }
+                disabled={disabled}
+                required={false}
+                value={disability.whoDLA || []}
+                onValueChange={(whoDLA): void => {
+                  onDisabilityChange({ whoDLA });
+                }}
+              />
+            </>
+          )}
+
+          <PostVisitActionInput
+            name="notes"
+            label={{
+              value: "Add note about any disability concerns if necessary.",
+            }}
+            rows={4}
+            disabled={disabled}
+            required={false}
+            value={disability.notes || []}
+            onValueChange={(notes): void => {
+              onDisabilityChange({ notes });
+            }}
+          />
+        </>
+      )}
+    </>
+  );
+};
 
 export const makeDisability = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DBNamedSchema extends NamedSchema<string, number, Schema<any>>,
-  StoreName extends StoreNames<DBNamedSchema["schema"]>,
-  Slug extends string
+  StoreName extends StoreNames<DBNamedSchema["schema"]>
 >(
   {
     basePath,
-    slug,
-    nextSlug,
     componentDatabaseMaps,
-  }: MakeDynamicProcessStepDefinitionOptions<
+  }: MakeComponentProcessStepDefinitionOptions<
     DBNamedSchema,
     StoreName,
-    DisabilityKey,
-    Slug
+    DisabilityKey
   >,
   getAllResidents: () => Promise<Residents | void> | Residents | void,
   getResidentDisabilities: () =>
     | Promise<ResidentDisabilities | void>
     | ResidentDisabilities
     | void
-): ProcessStepDefinition<DBNamedSchema, StoreName> => ({
+): ComponentProcessStepDefinition<
+  DBNamedSchema,
+  StoreName,
+  DisabilityStepProps
+> => ({
   title: StepTitle.Disability,
   heading: "Disability",
   step: {
-    slug,
-    nextSlug,
-    componentWrappers: [],
+    Component: DisabilityStep,
   },
   review: {
     rows: [
@@ -222,7 +389,7 @@ export const makeDisability = <
                         <div key={id}>
                           <strong>{fullName}</strong>:{" "}
                           {getCheckboxLabelsFromValues(
-                            disabilityCheckboxes,
+                            whatDisabilityCheckboxes,
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             disabilities!
                           )}
@@ -306,172 +473,3 @@ export const makeDisability = <
     ],
   },
 });
-
-export interface Disability {
-  present?: string;
-  who?: string[];
-  notes?: Notes;
-  pipOrDLA?: string;
-  whoPIP?: string[];
-  whoDLA?: string[];
-}
-
-export interface ResidentDisability {
-  [id: string]:
-    | {
-        what?: string[];
-      }
-    | undefined;
-}
-
-export interface DisabilityQuestionsProps {
-  loading?: boolean;
-  residents: Resident[];
-  disability: Disability;
-  onDisabilityChange(disability: Disability): void;
-  residentDisability: ResidentDisability;
-  onResidentDisabilityChange(residentDisability: ResidentDisability): void;
-  ResidentCheckboxes: ReturnType<typeof makeResidentCheckboxes>;
-}
-
-export const DisabilityQuestions: React.FunctionComponent<DisabilityQuestionsProps> = (
-  props
-) => {
-  const {
-    loading,
-    residents,
-    disability,
-    onDisabilityChange,
-    residentDisability,
-    onResidentDisabilityChange,
-    ResidentCheckboxes,
-  } = props;
-
-  const disabledResidents = residents.filter((resident) =>
-    disability.who?.includes(resident.id)
-  );
-
-  const disabled = loading || false;
-
-  return (
-    <>
-      <RadioButtons
-        name="present"
-        legend={
-          <FieldsetLegend>
-            {disabilityQuestions[DisabilityKey.Present]}
-          </FieldsetLegend>
-        }
-        radios={yesNoRadios}
-        disabled={disabled}
-        required={false}
-        value={disability.present || ""}
-        onValueChange={(present): void => {
-          onDisabilityChange({ present });
-        }}
-      />
-
-      {disability.present === "yes" && (
-        <>
-          <ResidentCheckboxes
-            name="who"
-            legend={
-              <FieldsetLegend>
-                {disabilityQuestions[DisabilityKey.Who]}
-              </FieldsetLegend>
-            }
-            disabled={disabled}
-            required={false}
-            value={disability.who || []}
-            onValueChange={(who): void => {
-              onDisabilityChange({ who });
-            }}
-          />
-
-          {loading
-            ? "Loading..."
-            : disabledResidents.map(({ id, fullName }) => (
-                <Checkboxes
-                  key={id}
-                  name={`what-${id}`}
-                  legend={
-                    <FieldsetLegend>How is {fullName} disabled?</FieldsetLegend>
-                  }
-                  checkboxes={disabilityCheckboxes}
-                  disabled={disabled}
-                  required={false}
-                  value={(residentDisability || {})[id]?.what || []}
-                  onValueChange={(what): void => {
-                    onResidentDisabilityChange({ [id]: { what } });
-                  }}
-                />
-              ))}
-
-          <RadioButtons
-            name="pip-or-dla"
-            legend={
-              <FieldsetLegend>
-                {disabilityQuestions[DisabilityKey.PIPOrDLA]}
-              </FieldsetLegend>
-            }
-            radios={yesNoRadios}
-            disabled={disabled}
-            required={false}
-            value={disability.pipOrDLA || ""}
-            onValueChange={(pipOrDLA): void => {
-              onDisabilityChange({ pipOrDLA });
-            }}
-          />
-
-          {disability.pipOrDLA === "yes" && (
-            <>
-              <ResidentCheckboxes
-                name="who-pip"
-                legend={
-                  <FieldsetLegend>
-                    {disabilityQuestions[DisabilityKey.WhoPIP]}
-                  </FieldsetLegend>
-                }
-                disabled={disabled}
-                required={false}
-                value={disability.whoPIP || []}
-                onValueChange={(whoPIP): void => {
-                  onDisabilityChange({ whoPIP });
-                }}
-              />
-
-              <ResidentCheckboxes
-                name="who-dla"
-                legend={
-                  <FieldsetLegend>
-                    {disabilityQuestions[DisabilityKey.WhoDLA]}
-                  </FieldsetLegend>
-                }
-                disabled={disabled}
-                required={false}
-                value={disability.whoDLA || []}
-                onValueChange={(whoDLA): void => {
-                  onDisabilityChange({ whoDLA });
-                }}
-              />
-            </>
-          )}
-
-          <PostVisitActionInput
-            name="notes"
-            label={{
-              value: "Add note about any disability concerns if necessary.",
-            }}
-            rows={4}
-            disabled={disabled}
-            required={false}
-            value={disability.notes || []}
-            onValueChange={(notes): void => {
-              onDisabilityChange({ notes });
-            }}
-          />
-        </>
-      )}
-    </>
-  );
-};

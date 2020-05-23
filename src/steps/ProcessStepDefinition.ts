@@ -54,13 +54,26 @@ interface HeadedStepDefinition<
 }
 
 export type ProcessStepDefinition<
-  DBSchema extends NamedSchema<string, number, Schema>,
-  StoreName extends StoreNames<DBSchema["schema"]> = StoreNames<
-    DBSchema["schema"]
+  DBNamedSchema extends NamedSchema<string, number, Schema>,
+  StoreName extends StoreNames<DBNamedSchema["schema"]> = StoreNames<
+    DBNamedSchema["schema"]
   >
 > =
-  | TitledStepDefinition<DBSchema, StoreName>
-  | HeadedStepDefinition<DBSchema, StoreName>;
+  | TitledStepDefinition<DBNamedSchema, StoreName>
+  | HeadedStepDefinition<DBNamedSchema, StoreName>;
+
+export interface ComponentProcessStepDefinition<
+  DBNamedSchema extends NamedSchema<string, number, Schema>,
+  StoreName extends StoreNames<DBNamedSchema["schema"]>,
+  StepComponentProps extends {}
+> {
+  title: NonNullable<ProcessStepDefinition<DBNamedSchema, StoreName>["title"]>;
+  heading?: ProcessStepDefinition<DBNamedSchema, StoreName>["heading"];
+  step: {
+    Component: React.FunctionComponent<StepComponentProps>;
+  };
+  review: NonNullable<BaseStepDefinition<DBNamedSchema, StoreName>["review"]>;
+}
 
 export interface MakeStaticProcessStepDefinitionOptions<Slug extends string> {
   basePath: string;
@@ -88,4 +101,23 @@ export interface MakeDynamicProcessStepDefinitionOptions<
       >["property"];
     };
   };
+}
+
+export interface MakeComponentProcessStepDefinitionOptions<
+  DBNamedSchema extends NamedSchema<string, number, Schema>,
+  StoreName extends StoreNames<DBNamedSchema["schema"]>,
+  ComponentKey extends string
+> {
+  basePath: MakeDynamicProcessStepDefinitionOptions<
+    DBNamedSchema,
+    StoreName,
+    ComponentKey,
+    never
+  >["basePath"];
+  componentDatabaseMaps: MakeDynamicProcessStepDefinitionOptions<
+    DBNamedSchema,
+    StoreName,
+    ComponentKey,
+    never
+  >["componentDatabaseMaps"];
 }

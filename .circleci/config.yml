@@ -8,7 +8,7 @@ jobs:
         default: false
 
     docker:
-      - image: circleci/node:12.13.0
+      - image: circleci/node:12.16.3
 
     steps:
       - checkout
@@ -48,7 +48,7 @@ jobs:
         default: false
 
     docker:
-      - image: circleci/node:12.13.0
+      - image: circleci/node:12.16.3
 
     steps:
       - checkout

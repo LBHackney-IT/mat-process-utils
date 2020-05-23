@@ -3,61 +3,9 @@ import { NextRouter, useRouter } from "next/router";
 import querystring from "querystring";
 import React, { useEffect } from "react";
 import { getProcessRef } from "../helpers/getProcessRef";
+import { isStep } from "../helpers/isStep";
 import { prefixUrl } from "../helpers/prefixUrl";
 import { handleSubmission } from "./internal/handleSubmission";
-
-const urlObjectForSlug = (
-  router: NextRouter,
-  slug: string,
-  basePath: string,
-  query?:
-    | {
-        [s: string]: string;
-      }
-    | undefined
-): { pathname: string } => {
-  return prefixUrl(router, basePath, { pathname: `/${slug}`, query: query });
-};
-
-const isRepeatingStep = (
-  router: NextRouter,
-  url: { pathname: string },
-  basePath: string,
-  repeatingStepSlugs: string[]
-): boolean => {
-  const { pathname } = prefixUrl(router, basePath, url);
-  const parts = pathname.split("/");
-  const maybeSlugId = parts[parts.length - 1];
-
-  return Boolean(
-    repeatingStepSlugs.find((slug) => {
-      const slugUrl = urlObjectForSlug(router, basePath, slug);
-
-      // This will stop working properly if we ever have nested routes.
-      return pathname === `${slugUrl.pathname}/${maybeSlugId}`;
-    })
-  );
-};
-
-const isStep = (
-  router: NextRouter,
-  url: { pathname: string },
-  basePath: string,
-  stepSlugs: string[],
-  repeatingStepSlugs?: string[]
-): boolean => {
-  const { pathname } = prefixUrl(router, basePath, url);
-
-  return Boolean(
-    stepSlugs.find((slug) => {
-      const slugUrl = urlObjectForSlug(router, slug, basePath);
-
-      return pathname === slugUrl.pathname;
-    }) ||
-      (repeatingStepSlugs !== undefined &&
-        isRepeatingStep(router, url, basePath, repeatingStepSlugs))
-  );
-};
 
 const urlsForRouter = (
   router: NextRouter,
@@ -148,7 +96,7 @@ export const SubmitButtons: React.FunctionComponent<SubmitButtonsProps<
     .filter(({ slug, cancel }) => !cancel && slug !== undefined)
     .map(({ slug }) => slug) as string[];
   const urls = slugs.map(
-    (slug) => urlObjectForSlug(router, slug, basePath).pathname
+    (slug) => makeUrlFromSlug(router, slug, basePath).pathname
   );
 
   useEffect(() => {
@@ -180,7 +128,7 @@ export const SubmitButtons: React.FunctionComponent<SubmitButtonsProps<
             ? { href: { pathname: undefined }, as: { pathname: undefined } }
             : urlsForRouter(
                 router,
-                urlObjectForSlug(router, nextSlug, basePath),
+                makeUrlFromSlug(router, nextSlug, basePath),
                 basePath,
                 stepSlugs,
                 repeatingStepSlugs

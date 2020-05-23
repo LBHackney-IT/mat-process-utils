@@ -1,5 +1,5 @@
 {
-  "name": "mat-process-utils",
+  "name": "@hackney/mat-process-utils",
   "version": "0.1.0",
   "description": "Reusable steps and tools for Manage a Tenancy processes",
   "license": "MIT",

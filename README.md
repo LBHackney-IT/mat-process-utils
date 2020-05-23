@@ -7,14 +7,14 @@
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/LBHackney-IT/mat-process-utils?style=for-the-badge)
 
-![Package version](https://img.shields.io/npm/v/mat-process-utils?style=for-the-badge)
-![Bundle size](https://img.shields.io/bundlephobia/min/mat-process-utils?style=for-the-badge)
+![Package version](https://img.shields.io/npm/v/@hackney/mat-process-utils?style=for-the-badge)
+![Bundle size](https://img.shields.io/bundlephobia/min/@hackney/mat-process-utils?style=for-the-badge)
 
-![TypeScript supported](https://img.shields.io/npm/types/mat-process-utils?style=for-the-badge)
-![TypeScript version](https://img.shields.io/npm/dependency-version/mat-process-utils/dev/typescript?style=for-the-badge)
+![TypeScript supported](https://img.shields.io/npm/types/@hackney/mat-process-utils?style=for-the-badge)
+![TypeScript version](https://img.shields.io/npm/dependency-version/@hackney/mat-process-utils/dev/typescript?style=for-the-badge)
 
-![Supported React versions](https://img.shields.io/npm/dependency-version/mat-process-utils/peer/react?style=for-the-badge)
-![Supported Next versions](https://img.shields.io/npm/dependency-version/mat-process-utils/peer/next?style=for-the-badge)
+![Supported React versions](https://img.shields.io/npm/dependency-version/@hackney/mat-process-utils/peer/react?style=for-the-badge)
+![Supported Next versions](https://img.shields.io/npm/dependency-version/@hackney/mat-process-utils/peer/next?style=for-the-badge)
 
 Reusable steps and tools for Manage a Tenancy processes
 

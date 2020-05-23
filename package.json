@@ -34,8 +34,8 @@
     "preversion": "npm install && npm test && bin/check-git"
   },
   "peerDependencies": {
-    "next": "^9.3.6",
-    "react": ">= 16"
+    "next": ">= 9 < 10",
+    "react": ">= 16 < 17"
   },
   "dependencies": {
     "classnames": "^2.2.6",

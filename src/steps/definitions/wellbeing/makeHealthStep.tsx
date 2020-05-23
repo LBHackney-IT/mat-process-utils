@@ -75,6 +75,7 @@ export const makeHealthStep = <
     repeatingStepSlugs,
     slug,
     nextSlug,
+    context,
     componentDatabaseMaps,
   }: MakeDynamicProcessStepDefinitionOptions<
     DBNamedSchema,
@@ -87,6 +88,7 @@ export const makeHealthStep = <
 ): ProcessStepDefinition<DBNamedSchema, StoreName> => ({
   title: StepTitle.Health,
   heading: "Health concerns",
+  context,
   step: {
     slug,
     nextSlug,

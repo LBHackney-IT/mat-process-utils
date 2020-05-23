@@ -44,6 +44,7 @@ export const makeSupportNeedsStep = <
   repeatingStepSlugs,
   slug,
   nextSlug,
+  context,
   componentDatabaseMaps,
 }: MakeDynamicProcessStepDefinitionOptions<
   DBNamedSchema,
@@ -53,6 +54,7 @@ export const makeSupportNeedsStep = <
 >): ProcessStepDefinition<DBNamedSchema, StoreName> => ({
   title: StepTitle.SupportNeeds,
   heading: "Support needs",
+  context,
   step: {
     slug,
     nextSlug,

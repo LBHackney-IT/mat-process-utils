@@ -39,6 +39,7 @@ it("returns correctly", () => {
     )
   ).toMatchInlineSnapshot(`
     Object {
+      "context": undefined,
       "heading": "Health concerns",
       "review": Object {
         "rows": Array [

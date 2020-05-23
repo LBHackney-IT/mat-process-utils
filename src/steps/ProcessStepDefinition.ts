@@ -89,6 +89,7 @@ export interface MakeDynamicProcessStepDefinitionOptions<
   ComponentKey extends string,
   Slug extends string
 > extends MakeStaticProcessStepDefinitionOptions<Slug> {
+  context?: DatabaseContext<DBNamedSchema>;
   componentDatabaseMaps: {
     [key in ComponentKey]: {
       storeName: ComponentDatabaseMapOptions<

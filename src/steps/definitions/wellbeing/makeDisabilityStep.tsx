@@ -6,24 +6,24 @@ import {
   Schema,
   StoreNames,
 } from "remultiform";
-import { Checkboxes } from "../../components/Checkboxes";
-import { makeResidentCheckboxes } from "../../components/makeResidentCheckboxes";
-import { PostVisitActionInput } from "../../components/PostVisitActionInput";
-import { RadioButtons } from "../../components/RadioButtons";
-import { ReviewNotes } from "../../components/ReviewNotes";
-import { getCheckboxLabelsFromValues } from "../../helpers/getCheckboxLabelsFromValues";
-import { getKeyFromSlug } from "../../helpers/getKeyFromSlug";
-import { getRadioLabelFromValue } from "../../helpers/getRadioLabelFromValue";
-import { Notes } from "../../schema/Notes";
-import { Resident, Residents } from "../../schema/Residents";
-import { yesNoRadios } from "../helpers/yesNoRadios";
+import { Checkboxes } from "../../../components/Checkboxes";
+import { makeResidentCheckboxes } from "../../../components/makeResidentCheckboxes";
+import { PostVisitActionInput } from "../../../components/PostVisitActionInput";
+import { RadioButtons } from "../../../components/RadioButtons";
+import { ReviewNotes } from "../../../components/ReviewNotes";
+import { getCheckboxLabelsFromValues } from "../../../helpers/getCheckboxLabelsFromValues";
+import { getKeyFromSlug } from "../../../helpers/getKeyFromSlug";
+import { getRadioLabelFromValue } from "../../../helpers/getRadioLabelFromValue";
+import { Notes } from "../../../schema/Notes";
+import { Resident, Residents } from "../../../schema/Residents";
+import { yesNoRadios } from "../../helpers/yesNoRadios";
 import {
   ComponentProcessStepDefinition,
   MakeComponentProcessStepDefinitionOptions,
-} from "../ProcessStepDefinition";
-import { StepTitle } from "../StepTitle";
+} from "../../ProcessStepDefinition";
+import { StepTitle } from "../../StepTitle";
 
-export enum DisabilityKey {
+export enum DisabilityStepKey {
   Present = "present",
   Who = "who",
   Notes = "notes",
@@ -54,16 +54,17 @@ type ResidentDisabilities = {
   disabilities: string[] | undefined;
 }[];
 
-export const disabilityQuestions = {
-  [DisabilityKey.Present]: "Does anyone in the household have a disability?",
-  [DisabilityKey.Who]: "Who has a disability?",
-  [DisabilityKey.PIPOrDLA]:
+const disabilityQuestions = {
+  [DisabilityStepKey.Present]:
+    "Does anyone in the household have a disability?",
+  [DisabilityStepKey.Who]: "Who has a disability?",
+  [DisabilityStepKey.PIPOrDLA]:
     "Does anyone in the household get Personal Independence Payment (PIP) or Disability Living Allowance (DLA)?",
-  [DisabilityKey.WhoPIP]: "Who gets PIP?",
-  [DisabilityKey.WhoDLA]: "Who gets DLA?",
+  [DisabilityStepKey.WhoPIP]: "Who gets PIP?",
+  [DisabilityStepKey.WhoDLA]: "Who gets DLA?",
 };
 
-export const whatDisabilityCheckboxes = [
+const whatCheckboxes = [
   {
     label: "Hearing",
     value: "hearing",
@@ -149,7 +150,7 @@ const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
         name="present"
         legend={
           <FieldsetLegend>
-            {disabilityQuestions[DisabilityKey.Present]}
+            {disabilityQuestions[DisabilityStepKey.Present]}
           </FieldsetLegend>
         }
         radios={yesNoRadios}
@@ -167,7 +168,7 @@ const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
             name="who"
             legend={
               <FieldsetLegend>
-                {disabilityQuestions[DisabilityKey.Who]}
+                {disabilityQuestions[DisabilityStepKey.Who]}
               </FieldsetLegend>
             }
             disabled={disabled}
@@ -187,7 +188,7 @@ const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
                   legend={
                     <FieldsetLegend>How is {fullName} disabled?</FieldsetLegend>
                   }
-                  checkboxes={whatDisabilityCheckboxes}
+                  checkboxes={whatCheckboxes}
                   disabled={disabled}
                   required={false}
                   value={(residentDisability || {})[id]?.what || []}
@@ -201,7 +202,7 @@ const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
             name="pip-or-dla"
             legend={
               <FieldsetLegend>
-                {disabilityQuestions[DisabilityKey.PIPOrDLA]}
+                {disabilityQuestions[DisabilityStepKey.PIPOrDLA]}
               </FieldsetLegend>
             }
             radios={yesNoRadios}
@@ -219,7 +220,7 @@ const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
                 name="who-pip"
                 legend={
                   <FieldsetLegend>
-                    {disabilityQuestions[DisabilityKey.WhoPIP]}
+                    {disabilityQuestions[DisabilityStepKey.WhoPIP]}
                   </FieldsetLegend>
                 }
                 disabled={disabled}
@@ -234,7 +235,7 @@ const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
                 name="who-dla"
                 legend={
                   <FieldsetLegend>
-                    {disabilityQuestions[DisabilityKey.WhoDLA]}
+                    {disabilityQuestions[DisabilityStepKey.WhoDLA]}
                   </FieldsetLegend>
                 }
                 disabled={disabled}
@@ -266,7 +267,7 @@ const DisabilityStep: React.FunctionComponent<DisabilityStepProps> = (
   );
 };
 
-export const makeDisability = <
+export const makeDisabilityStep = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DBNamedSchema extends NamedSchema<string, number, Schema<any>>,
   StoreName extends StoreNames<DBNamedSchema["schema"]>
@@ -277,7 +278,7 @@ export const makeDisability = <
   }: MakeComponentProcessStepDefinitionOptions<
     DBNamedSchema,
     StoreName,
-    DisabilityKey
+    DisabilityStepKey
   >,
   getAllResidents: () => Promise<Residents | void> | Residents | void,
   getResidentDisabilities: () =>
@@ -297,19 +298,21 @@ export const makeDisability = <
   review: {
     rows: [
       {
-        label: disabilityQuestions[DisabilityKey.Present],
+        label: disabilityQuestions[DisabilityStepKey.Present],
         values: {
-          [DisabilityKey.Present]: {
+          [DisabilityStepKey.Present]: {
             renderValue(present: string): React.ReactNode {
               return getRadioLabelFromValue(yesNoRadios, present);
             },
             databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-              storeName: componentDatabaseMaps[DisabilityKey.Present].storeName,
+              storeName:
+                componentDatabaseMaps[DisabilityStepKey.Present].storeName,
               key: getKeyFromSlug(basePath),
-              property: componentDatabaseMaps[DisabilityKey.Present].property,
+              property:
+                componentDatabaseMaps[DisabilityStepKey.Present].property,
             }),
           },
-          [DisabilityKey.Who]: {
+          [DisabilityStepKey.Who]: {
             async renderValue(who: string[]): Promise<React.ReactNode> {
               const residents = await getAllResidents();
 
@@ -325,12 +328,12 @@ export const makeDisability = <
                 .join(", ");
             },
             databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-              storeName: componentDatabaseMaps[DisabilityKey.Who].storeName,
+              storeName: componentDatabaseMaps[DisabilityStepKey.Who].storeName,
               key: getKeyFromSlug(basePath),
-              property: componentDatabaseMaps[DisabilityKey.Who].property,
+              property: componentDatabaseMaps[DisabilityStepKey.Who].property,
             }),
           },
-          [DisabilityKey.Notes]: {
+          [DisabilityStepKey.Notes]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -339,9 +342,10 @@ export const makeDisability = <
               return <ReviewNotes notes={notes} />;
             },
             databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-              storeName: componentDatabaseMaps[DisabilityKey.Notes].storeName,
+              storeName:
+                componentDatabaseMaps[DisabilityStepKey.Notes].storeName,
               key: getKeyFromSlug(basePath),
-              property: componentDatabaseMaps[DisabilityKey.Notes].property,
+              property: componentDatabaseMaps[DisabilityStepKey.Notes].property,
             }),
           },
         },
@@ -389,7 +393,7 @@ export const makeDisability = <
                         <div key={id}>
                           <strong>{fullName}</strong>:{" "}
                           {getCheckboxLabelsFromValues(
-                            whatDisabilityCheckboxes,
+                            whatCheckboxes,
                             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             disabilities!
                           )}
@@ -403,25 +407,26 @@ export const makeDisability = <
         },
       },
       {
-        label: disabilityQuestions[DisabilityKey.PIPOrDLA],
+        label: disabilityQuestions[DisabilityStepKey.PIPOrDLA],
         values: {
-          [DisabilityKey.PIPOrDLA]: {
+          [DisabilityStepKey.PIPOrDLA]: {
             renderValue(pipOrDLA: string): React.ReactNode {
               return getRadioLabelFromValue(yesNoRadios, pipOrDLA);
             },
             databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
               storeName:
-                componentDatabaseMaps[DisabilityKey.PIPOrDLA].storeName,
+                componentDatabaseMaps[DisabilityStepKey.PIPOrDLA].storeName,
               key: getKeyFromSlug(basePath),
-              property: componentDatabaseMaps[DisabilityKey.PIPOrDLA].property,
+              property:
+                componentDatabaseMaps[DisabilityStepKey.PIPOrDLA].property,
             }),
           },
         },
       },
       {
-        label: disabilityQuestions[DisabilityKey.WhoPIP],
+        label: disabilityQuestions[DisabilityStepKey.WhoPIP],
         values: {
-          [DisabilityKey.WhoPIP]: {
+          [DisabilityStepKey.WhoPIP]: {
             async renderValue(whoPIP: string[]): Promise<React.ReactNode> {
               const residents = await getAllResidents();
 
@@ -437,17 +442,19 @@ export const makeDisability = <
                 .join(", ");
             },
             databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-              storeName: componentDatabaseMaps[DisabilityKey.WhoPIP].storeName,
+              storeName:
+                componentDatabaseMaps[DisabilityStepKey.WhoPIP].storeName,
               key: getKeyFromSlug(basePath),
-              property: componentDatabaseMaps[DisabilityKey.WhoPIP].property,
+              property:
+                componentDatabaseMaps[DisabilityStepKey.WhoPIP].property,
             }),
           },
         },
       },
       {
-        label: disabilityQuestions[DisabilityKey.WhoDLA],
+        label: disabilityQuestions[DisabilityStepKey.WhoDLA],
         values: {
-          [DisabilityKey.WhoDLA]: {
+          [DisabilityStepKey.WhoDLA]: {
             async renderValue(whoDLA: string[]): Promise<React.ReactNode> {
               const residents = await getAllResidents();
 
@@ -463,9 +470,11 @@ export const makeDisability = <
                 .join(", ");
             },
             databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-              storeName: componentDatabaseMaps[DisabilityKey.WhoDLA].storeName,
+              storeName:
+                componentDatabaseMaps[DisabilityStepKey.WhoDLA].storeName,
               key: getKeyFromSlug(basePath),
-              property: componentDatabaseMaps[DisabilityKey.WhoDLA].property,
+              property:
+                componentDatabaseMaps[DisabilityStepKey.WhoDLA].property,
             }),
           },
         },

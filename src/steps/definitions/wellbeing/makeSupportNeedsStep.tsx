@@ -9,21 +9,21 @@ import {
   StaticComponent,
   StoreNames,
 } from "remultiform";
-import { makeSubmit } from "../../components/makeSubmit";
+import { makeSubmit } from "../../../components/makeSubmit";
 import {
   PostVisitActionInputDetails,
   PostVisitActionInputDetailsProps,
-} from "../../components/PostVisitActionInputDetails";
-import { ReviewNotes } from "../../components/ReviewNotes";
-import { getKeyFromSlug } from "../../helpers/getKeyFromSlug";
-import { Notes } from "../../schema/Notes";
+} from "../../../components/PostVisitActionInputDetails";
+import { ReviewNotes } from "../../../components/ReviewNotes";
+import { getKeyFromSlug } from "../../../helpers/getKeyFromSlug";
+import { Notes } from "../../../schema/Notes";
 import {
   MakeDynamicProcessStepDefinitionOptions,
   ProcessStepDefinition,
-} from "../ProcessStepDefinition";
-import { StepTitle } from "../StepTitle";
+} from "../../ProcessStepDefinition";
+import { StepTitle } from "../../StepTitle";
 
-export enum SupportNeedsKey {
+export enum SupportNeedsStepKey {
   ResidentSustainment = "resident-sustainment",
   Befriending = "befriending",
   AdultSafeguarding = "adult-safeguarding",
@@ -33,7 +33,7 @@ export enum SupportNeedsKey {
   MentalHealthOver65 = "mental-health-over-65",
 }
 
-export const makeSupportNeeds = <
+export const makeSupportNeedsStep = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DBNamedSchema extends NamedSchema<string, number, Schema<any>>,
   StoreName extends StoreNames<DBNamedSchema["schema"]>,
@@ -48,7 +48,7 @@ export const makeSupportNeeds = <
 }: MakeDynamicProcessStepDefinitionOptions<
   DBNamedSchema,
   StoreName,
-  SupportNeedsKey,
+  SupportNeedsStepKey,
   Slug
 >): ProcessStepDefinition<DBNamedSchema, StoreName> => ({
   title: StepTitle.SupportNeeds,
@@ -89,7 +89,7 @@ export const makeSupportNeeds = <
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: SupportNeedsKey.ResidentSustainment,
+          key: SupportNeedsStepKey.ResidentSustainment,
           Component: PostVisitActionInputDetails,
           props: {
             summary: (
@@ -124,18 +124,18 @@ export const makeSupportNeeds = <
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
             storeName:
-              componentDatabaseMaps[SupportNeedsKey.ResidentSustainment]
+              componentDatabaseMaps[SupportNeedsStepKey.ResidentSustainment]
                 .storeName,
             key: getKeyFromSlug(basePath),
             property:
-              componentDatabaseMaps[SupportNeedsKey.ResidentSustainment]
+              componentDatabaseMaps[SupportNeedsStepKey.ResidentSustainment]
                 .property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: SupportNeedsKey.Befriending,
+          key: SupportNeedsStepKey.Befriending,
           Component: PostVisitActionInputDetails,
           props: {
             summary: (
@@ -158,16 +158,16 @@ export const makeSupportNeeds = <
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
             storeName:
-              componentDatabaseMaps[SupportNeedsKey.Befriending].storeName,
+              componentDatabaseMaps[SupportNeedsStepKey.Befriending].storeName,
             key: getKeyFromSlug(basePath),
             property:
-              componentDatabaseMaps[SupportNeedsKey.Befriending].property,
+              componentDatabaseMaps[SupportNeedsStepKey.Befriending].property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: SupportNeedsKey.AdultSafeguarding,
+          key: SupportNeedsStepKey.AdultSafeguarding,
           Component: PostVisitActionInputDetails,
           props: {
             summary: (
@@ -220,17 +220,18 @@ export const makeSupportNeeds = <
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
             storeName:
-              componentDatabaseMaps[SupportNeedsKey.AdultSafeguarding]
+              componentDatabaseMaps[SupportNeedsStepKey.AdultSafeguarding]
                 .storeName,
             key: getKeyFromSlug(basePath),
             property:
-              componentDatabaseMaps[SupportNeedsKey.AdultSafeguarding].property,
+              componentDatabaseMaps[SupportNeedsStepKey.AdultSafeguarding]
+                .property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: SupportNeedsKey.ChildSafeguarding,
+          key: SupportNeedsStepKey.ChildSafeguarding,
           Component: PostVisitActionInputDetails,
           props: {
             summary: (
@@ -280,17 +281,18 @@ export const makeSupportNeeds = <
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
             storeName:
-              componentDatabaseMaps[SupportNeedsKey.ChildSafeguarding]
+              componentDatabaseMaps[SupportNeedsStepKey.ChildSafeguarding]
                 .storeName,
             key: getKeyFromSlug(basePath),
             property:
-              componentDatabaseMaps[SupportNeedsKey.ChildSafeguarding].property,
+              componentDatabaseMaps[SupportNeedsStepKey.ChildSafeguarding]
+                .property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: SupportNeedsKey.DomesticViolence,
+          key: SupportNeedsStepKey.DomesticViolence,
           Component: PostVisitActionInputDetails,
           props: {
             summary: (
@@ -326,16 +328,18 @@ export const makeSupportNeeds = <
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
             storeName:
-              componentDatabaseMaps[SupportNeedsKey.DomesticViolence].storeName,
+              componentDatabaseMaps[SupportNeedsStepKey.DomesticViolence]
+                .storeName,
             key: getKeyFromSlug(basePath),
             property:
-              componentDatabaseMaps[SupportNeedsKey.DomesticViolence].property,
+              componentDatabaseMaps[SupportNeedsStepKey.DomesticViolence]
+                .property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: SupportNeedsKey.MentalHealth18To65,
+          key: SupportNeedsStepKey.MentalHealth18To65,
           Component: PostVisitActionInputDetails,
           props: {
             summary: (
@@ -373,18 +377,18 @@ export const makeSupportNeeds = <
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
             storeName:
-              componentDatabaseMaps[SupportNeedsKey.MentalHealth18To65]
+              componentDatabaseMaps[SupportNeedsStepKey.MentalHealth18To65]
                 .storeName,
             key: getKeyFromSlug(basePath),
             property:
-              componentDatabaseMaps[SupportNeedsKey.MentalHealth18To65]
+              componentDatabaseMaps[SupportNeedsStepKey.MentalHealth18To65]
                 .property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: SupportNeedsKey.MentalHealthOver65,
+          key: SupportNeedsStepKey.MentalHealthOver65,
           Component: PostVisitActionInputDetails,
           props: {
             summary: (
@@ -425,11 +429,11 @@ export const makeSupportNeeds = <
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
             storeName:
-              componentDatabaseMaps[SupportNeedsKey.MentalHealthOver65]
+              componentDatabaseMaps[SupportNeedsStepKey.MentalHealthOver65]
                 .storeName,
             key: getKeyFromSlug(basePath),
             property:
-              componentDatabaseMaps[SupportNeedsKey.MentalHealthOver65]
+              componentDatabaseMaps[SupportNeedsStepKey.MentalHealthOver65]
                 .property,
           }),
         })
@@ -441,7 +445,7 @@ export const makeSupportNeeds = <
       {
         label: "Resident sustainment",
         values: {
-          [SupportNeedsKey.ResidentSustainment]: {
+          [SupportNeedsStepKey.ResidentSustainment]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -455,7 +459,7 @@ export const makeSupportNeeds = <
       {
         label: "Befriending",
         values: {
-          [SupportNeedsKey.Befriending]: {
+          [SupportNeedsStepKey.Befriending]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -469,7 +473,7 @@ export const makeSupportNeeds = <
       {
         label: "Adult safeguarding",
         values: {
-          [SupportNeedsKey.AdultSafeguarding]: {
+          [SupportNeedsStepKey.AdultSafeguarding]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -483,7 +487,7 @@ export const makeSupportNeeds = <
       {
         label: "Children's and young people's safeguarding",
         values: {
-          [SupportNeedsKey.ChildSafeguarding]: {
+          [SupportNeedsStepKey.ChildSafeguarding]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -497,7 +501,7 @@ export const makeSupportNeeds = <
       {
         label: "Domestic violence & sexual abuse",
         values: {
-          [SupportNeedsKey.DomesticViolence]: {
+          [SupportNeedsStepKey.DomesticViolence]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -511,7 +515,7 @@ export const makeSupportNeeds = <
       {
         label: "Mental health - aged 18-65",
         values: {
-          [SupportNeedsKey.MentalHealth18To65]: {
+          [SupportNeedsStepKey.MentalHealth18To65]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;
@@ -525,7 +529,7 @@ export const makeSupportNeeds = <
       {
         label: "Mental health - over 65",
         values: {
-          [SupportNeedsKey.MentalHealthOver65]: {
+          [SupportNeedsStepKey.MentalHealthOver65]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;

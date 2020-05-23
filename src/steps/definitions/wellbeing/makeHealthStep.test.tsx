@@ -1,10 +1,10 @@
 import React from "react";
-import { TestNamedSchema } from "../../__fixtures__/TestNamedSchema";
-import { HealthKey, makeHealth } from "./makeHealth";
+import { TestNamedSchema } from "../../../__fixtures__/TestNamedSchema";
+import { HealthStepKey, makeHealthStep } from "./makeHealthStep";
 
 it("returns correctly", () => {
   expect(
-    makeHealth<
+    makeHealthStep<
       TestNamedSchema,
       "store",
       "slug-a" | "slug-b" | "slug-repeat-a" | "slug-repeat-b"
@@ -16,19 +16,19 @@ it("returns correctly", () => {
         slug: "slug-a",
         nextSlug: "slug-b",
         componentDatabaseMaps: {
-          [HealthKey.Concerns]: {
+          [HealthStepKey.Concerns]: {
             storeName: "store",
             property: "value",
           },
-          [HealthKey.Who]: {
+          [HealthStepKey.Who]: {
             storeName: "store",
             property: "value",
           },
-          [HealthKey.MoreInfo]: {
+          [HealthStepKey.MoreInfo]: {
             storeName: "store",
             property: "value",
           },
-          [HealthKey.Notes]: {
+          [HealthStepKey.Notes]: {
             storeName: "store",
             property: "value",
           },

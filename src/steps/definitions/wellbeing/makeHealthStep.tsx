@@ -9,27 +9,27 @@ import {
   Schema,
   StoreNames,
 } from "remultiform";
-import { Checkboxes } from "../../components/Checkboxes";
-import { makeResidentCheckboxes } from "../../components/makeResidentCheckboxes";
-import { makeSubmit } from "../../components/makeSubmit";
+import { Checkboxes } from "../../../components/Checkboxes";
+import { makeResidentCheckboxes } from "../../../components/makeResidentCheckboxes";
+import { makeSubmit } from "../../../components/makeSubmit";
 import {
   PostVisitActionInput,
   PostVisitActionInputProps,
-} from "../../components/PostVisitActionInput";
-import { RadioButtons } from "../../components/RadioButtons";
-import { ReviewNotes } from "../../components/ReviewNotes";
-import { getKeyFromSlug } from "../../helpers/getKeyFromSlug";
-import { getRadioLabelFromValue } from "../../helpers/getRadioLabelFromValue";
-import { Notes } from "../../schema/Notes";
-import { Residents } from "../../schema/Residents";
-import { yesNoRadios } from "../helpers/yesNoRadios";
+} from "../../../components/PostVisitActionInput";
+import { RadioButtons } from "../../../components/RadioButtons";
+import { ReviewNotes } from "../../../components/ReviewNotes";
+import { getKeyFromSlug } from "../../../helpers/getKeyFromSlug";
+import { getRadioLabelFromValue } from "../../../helpers/getRadioLabelFromValue";
+import { Notes } from "../../../schema/Notes";
+import { Residents } from "../../../schema/Residents";
+import { yesNoRadios } from "../../helpers/yesNoRadios";
 import {
   MakeDynamicProcessStepDefinitionOptions,
   ProcessStepDefinition,
-} from "../ProcessStepDefinition";
-import { StepTitle } from "../StepTitle";
+} from "../../ProcessStepDefinition";
+import { StepTitle } from "../../StepTitle";
 
-export enum HealthKey {
+export enum HealthStepKey {
   Concerns = "concerns",
   Who = "who",
   MoreInfo = "more-info",
@@ -37,14 +37,14 @@ export enum HealthKey {
 }
 
 const questions = {
-  [HealthKey.Concerns]:
+  [HealthStepKey.Concerns]:
     "Does anyone in the household have any health concerns?",
-  [HealthKey.Who]: "Who has health concerns?",
-  [HealthKey.MoreInfo]:
+  [HealthStepKey.Who]: "Who has health concerns?",
+  [HealthStepKey.MoreInfo]:
     "Are they interested in more information about or being linked to our support services?",
 };
 
-const healthConcernsCheckboxes = [
+const concernsCheckboxes = [
   {
     label: "Childhood obesity",
     value: "childhood obesity",
@@ -63,7 +63,7 @@ const healthConcernsCheckboxes = [
   },
 ];
 
-export const makeHealth = <
+export const makeHealthStep = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DBNamedSchema extends NamedSchema<string, number, Schema<any>>,
   StoreName extends StoreNames<DBNamedSchema["schema"]>,
@@ -79,7 +79,7 @@ export const makeHealth = <
   }: MakeDynamicProcessStepDefinitionOptions<
     DBNamedSchema,
     StoreName,
-    HealthKey,
+    HealthStepKey,
     Slug
   >,
   getAllResidents: () => Promise<Residents | void> | Residents | void,
@@ -103,76 +103,80 @@ export const makeHealth = <
     componentWrappers: [
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: HealthKey.Concerns,
+          key: HealthStepKey.Concerns,
           Component: RadioButtons,
           props: {
             name: "health-concerns",
             legend: (
-              <FieldsetLegend>{questions[HealthKey.Concerns]}</FieldsetLegend>
+              <FieldsetLegend>
+                {questions[HealthStepKey.Concerns]}
+              </FieldsetLegend>
             ) as React.ReactNode,
             radios: yesNoRadios,
           },
           defaultValue: "",
           emptyValue: "",
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-            storeName: componentDatabaseMaps[HealthKey.Concerns].storeName,
+            storeName: componentDatabaseMaps[HealthStepKey.Concerns].storeName,
             key: getKeyFromSlug(basePath),
-            property: componentDatabaseMaps[HealthKey.Concerns].property,
+            property: componentDatabaseMaps[HealthStepKey.Concerns].property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: HealthKey.Who,
+          key: HealthStepKey.Who,
           Component: ResidentCheckboxes,
           props: {
             name: "health-concerns-who",
             legend: (
-              <FieldsetLegend>{questions[HealthKey.Who]}</FieldsetLegend>
+              <FieldsetLegend>{questions[HealthStepKey.Who]}</FieldsetLegend>
             ) as React.ReactNode,
           },
           renderWhen(stepValues: {
-            [HealthKey.Concerns]?: ComponentValue<DBNamedSchema, StoreName>;
+            [HealthStepKey.Concerns]?: ComponentValue<DBNamedSchema, StoreName>;
           }): boolean {
-            return stepValues[HealthKey.Concerns] === "yes";
+            return stepValues[HealthStepKey.Concerns] === "yes";
           },
           defaultValue: [],
           emptyValue: [] as string[],
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-            storeName: componentDatabaseMaps[HealthKey.Who].storeName,
+            storeName: componentDatabaseMaps[HealthStepKey.Who].storeName,
             key: getKeyFromSlug(basePath),
-            property: componentDatabaseMaps[HealthKey.Who].property,
+            property: componentDatabaseMaps[HealthStepKey.Who].property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: HealthKey.MoreInfo,
+          key: HealthStepKey.MoreInfo,
           Component: Checkboxes,
           props: {
             name: "health-concerns-more-info",
             legend: (
-              <FieldsetLegend>{questions[HealthKey.MoreInfo]}</FieldsetLegend>
+              <FieldsetLegend>
+                {questions[HealthStepKey.MoreInfo]}
+              </FieldsetLegend>
             ) as React.ReactNode,
-            checkboxes: healthConcernsCheckboxes,
+            checkboxes: concernsCheckboxes,
           },
           renderWhen(stepValues: {
-            [HealthKey.Concerns]?: ComponentValue<DBNamedSchema, StoreName>;
+            [HealthStepKey.Concerns]?: ComponentValue<DBNamedSchema, StoreName>;
           }): boolean {
-            return stepValues[HealthKey.Concerns] === "yes";
+            return stepValues[HealthStepKey.Concerns] === "yes";
           },
           defaultValue: [],
           emptyValue: [] as string[],
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-            storeName: componentDatabaseMaps[HealthKey.MoreInfo].storeName,
+            storeName: componentDatabaseMaps[HealthStepKey.MoreInfo].storeName,
             key: getKeyFromSlug(basePath),
-            property: componentDatabaseMaps[HealthKey.MoreInfo].property,
+            property: componentDatabaseMaps[HealthStepKey.MoreInfo].property,
           }),
         })
       ),
       ComponentWrapper.wrapDynamic(
         new DynamicComponent({
-          key: HealthKey.Notes,
+          key: HealthStepKey.Notes,
           Component: PostVisitActionInput,
           props: {
             name: "health-notes",
@@ -182,16 +186,16 @@ export const makeHealth = <
             rows: 4,
           } as PostVisitActionInputProps,
           renderWhen(stepValues: {
-            [HealthKey.Concerns]?: ComponentValue<DBNamedSchema, StoreName>;
+            [HealthStepKey.Concerns]?: ComponentValue<DBNamedSchema, StoreName>;
           }): boolean {
-            return stepValues[HealthKey.Concerns] === "yes";
+            return stepValues[HealthStepKey.Concerns] === "yes";
           },
           defaultValue: [] as Notes,
           emptyValue: [] as Notes,
           databaseMap: new ComponentDatabaseMap<DBNamedSchema, StoreName>({
-            storeName: componentDatabaseMaps[HealthKey.Notes].storeName,
+            storeName: componentDatabaseMaps[HealthStepKey.Notes].storeName,
             key: getKeyFromSlug(basePath),
-            property: componentDatabaseMaps[HealthKey.Notes].property,
+            property: componentDatabaseMaps[HealthStepKey.Notes].property,
           }),
         })
       ),
@@ -200,9 +204,9 @@ export const makeHealth = <
   review: {
     rows: [
       {
-        label: questions[HealthKey.Concerns],
+        label: questions[HealthStepKey.Concerns],
         values: {
-          [HealthKey.Concerns]: {
+          [HealthStepKey.Concerns]: {
             renderValue(concerns: string): React.ReactNode {
               return getRadioLabelFromValue(yesNoRadios, concerns);
             },
@@ -210,9 +214,9 @@ export const makeHealth = <
         },
       },
       {
-        label: questions[HealthKey.Who],
+        label: questions[HealthStepKey.Who],
         values: {
-          [HealthKey.Who]: {
+          [HealthStepKey.Who]: {
             async renderValue(who: string[]): Promise<React.ReactNode> {
               const residents = await getAllResidents();
 
@@ -231,18 +235,18 @@ export const makeHealth = <
         },
       },
       {
-        label: questions[HealthKey.MoreInfo],
+        label: questions[HealthStepKey.MoreInfo],
         values: {
-          [HealthKey.MoreInfo]: {
+          [HealthStepKey.MoreInfo]: {
             renderValue(moreInfo: string[]): React.ReactNode {
               return moreInfo
                 .map((info: string) => {
-                  return getRadioLabelFromValue(healthConcernsCheckboxes, info);
+                  return getRadioLabelFromValue(concernsCheckboxes, info);
                 })
                 .join(", ");
             },
           },
-          [HealthKey.Notes]: {
+          [HealthStepKey.Notes]: {
             renderValue(notes: Notes): React.ReactNode {
               if (notes.length === 0) {
                 return;

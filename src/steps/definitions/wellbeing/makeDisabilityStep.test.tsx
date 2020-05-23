@@ -1,35 +1,35 @@
 import React from "react";
 import { create } from "react-test-renderer";
-import { TestNamedSchema } from "../../__fixtures__/TestNamedSchema";
-import { DisabilityKey, makeDisability } from "./makeDisability";
+import { TestNamedSchema } from "../../../__fixtures__/TestNamedSchema";
+import { DisabilityStepKey, makeDisabilityStep } from "./makeDisabilityStep";
 
 it("returns correctly", () => {
   expect(
-    makeDisability<TestNamedSchema, "store">(
+    makeDisabilityStep<TestNamedSchema, "store">(
       {
         basePath: "/base/path",
         componentDatabaseMaps: {
-          [DisabilityKey.Present]: {
+          [DisabilityStepKey.Present]: {
             storeName: "store",
             property: "value",
           },
-          [DisabilityKey.Who]: {
+          [DisabilityStepKey.Who]: {
             storeName: "store",
             property: "value",
           },
-          [DisabilityKey.Notes]: {
+          [DisabilityStepKey.Notes]: {
             storeName: "store",
             property: "value",
           },
-          [DisabilityKey.PIPOrDLA]: {
+          [DisabilityStepKey.PIPOrDLA]: {
             storeName: "store",
             property: "value",
           },
-          [DisabilityKey.WhoPIP]: {
+          [DisabilityStepKey.WhoPIP]: {
             storeName: "store",
             property: "value",
           },
-          [DisabilityKey.WhoDLA]: {
+          [DisabilityStepKey.WhoDLA]: {
             storeName: "store",
             property: "value",
           },
@@ -142,31 +142,31 @@ it("returns correctly", () => {
 });
 
 it("returns a step component that renders correctly", () => {
-  const processStep = makeDisability<TestNamedSchema, "store">(
+  const processStep = makeDisabilityStep<TestNamedSchema, "store">(
     {
       basePath: "/base/path",
       componentDatabaseMaps: {
-        [DisabilityKey.Present]: {
+        [DisabilityStepKey.Present]: {
           storeName: "store",
           property: "value",
         },
-        [DisabilityKey.Who]: {
+        [DisabilityStepKey.Who]: {
           storeName: "store",
           property: "value",
         },
-        [DisabilityKey.Notes]: {
+        [DisabilityStepKey.Notes]: {
           storeName: "store",
           property: "value",
         },
-        [DisabilityKey.PIPOrDLA]: {
+        [DisabilityStepKey.PIPOrDLA]: {
           storeName: "store",
           property: "value",
         },
-        [DisabilityKey.WhoPIP]: {
+        [DisabilityStepKey.WhoPIP]: {
           storeName: "store",
           property: "value",
         },
-        [DisabilityKey.WhoDLA]: {
+        [DisabilityStepKey.WhoDLA]: {
           storeName: "store",
           property: "value",
         },

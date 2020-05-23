@@ -1,9 +1,12 @@
-import { TestNamedSchema } from "../../__fixtures__/TestNamedSchema";
-import { makeSupportNeeds, SupportNeedsKey } from "./makeSupportNeeds";
+import { TestNamedSchema } from "../../../__fixtures__/TestNamedSchema";
+import {
+  makeSupportNeedsStep,
+  SupportNeedsStepKey,
+} from "./makeSupportNeedsStep";
 
 it("returns correctly", () => {
   expect(
-    makeSupportNeeds<
+    makeSupportNeedsStep<
       TestNamedSchema,
       "store",
       "slug-a" | "slug-b" | "slug-repeat-a" | "slug-repeat-b"
@@ -14,31 +17,31 @@ it("returns correctly", () => {
       slug: "slug-a",
       nextSlug: "slug-b",
       componentDatabaseMaps: {
-        [SupportNeedsKey.ResidentSustainment]: {
+        [SupportNeedsStepKey.ResidentSustainment]: {
           storeName: "store",
           property: "value",
         },
-        [SupportNeedsKey.Befriending]: {
+        [SupportNeedsStepKey.Befriending]: {
           storeName: "store",
           property: "value",
         },
-        [SupportNeedsKey.AdultSafeguarding]: {
+        [SupportNeedsStepKey.AdultSafeguarding]: {
           storeName: "store",
           property: "value",
         },
-        [SupportNeedsKey.ChildSafeguarding]: {
+        [SupportNeedsStepKey.ChildSafeguarding]: {
           storeName: "store",
           property: "value",
         },
-        [SupportNeedsKey.DomesticViolence]: {
+        [SupportNeedsStepKey.DomesticViolence]: {
           storeName: "store",
           property: "value",
         },
-        [SupportNeedsKey.MentalHealth18To65]: {
+        [SupportNeedsStepKey.MentalHealth18To65]: {
           storeName: "store",
           property: "value",
         },
-        [SupportNeedsKey.MentalHealthOver65]: {
+        [SupportNeedsStepKey.MentalHealthOver65]: {
           storeName: "store",
           property: "value",
         },

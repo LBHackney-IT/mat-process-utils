@@ -1,66 +1,9 @@
 import { Button } from "lbh-frontend-react";
-import { NextRouter, useRouter } from "next/router";
-import querystring from "querystring";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { getProcessRef } from "../helpers/getProcessRef";
-import { isStep } from "../helpers/isStep";
-import { prefixUrl } from "../helpers/prefixUrl";
+import { makeNextRouterUrls } from "../helpers/makeNextRouterUrls";
+import { makeUrlFromSlug } from "../helpers/makeUrlFromSlug";
 import { handleSubmission } from "./internal/handleSubmission";
-
-const urlsForRouter = (
-  router: NextRouter,
-  url:
-    | string
-    | {
-        pathname: string;
-        query?: { [s: string]: string };
-      },
-  basePath: string,
-  stepSlugs: string[],
-  repeatingStepSlugs?: string[]
-): {
-  href: {
-    pathname: string;
-    query?: { [s: string]: string };
-  };
-  as: {
-    pathname: string;
-    query?: { [s: string]: string };
-  };
-} => {
-  let href: {
-    pathname: string;
-    query?: { [s: string]: string };
-  };
-
-  if (typeof url === "string") {
-    const urlComponents = url.split("?", 2);
-    const pathname = urlComponents[0];
-    const query = querystring.parse(urlComponents[1]) as {
-      [key: string]: string;
-    };
-
-    href = { pathname, query };
-  } else {
-    href = { ...url };
-  }
-
-  const as = prefixUrl(router, basePath, { ...href });
-
-  if (isStep(router, href, basePath, stepSlugs, repeatingStepSlugs)) {
-    href.pathname = "/[...slug]";
-  }
-
-  href = prefixUrl(router, basePath, href);
-
-  const processRef = getProcessRef(router);
-
-  if (processRef) {
-    href.pathname = href.pathname.replace(processRef, "[processRef]");
-  }
-
-  return { href, as };
-};
 
 export interface SubmitButtonProps<Slug extends string> {
   slug?: Slug;
@@ -101,7 +44,7 @@ export const SubmitButtons: React.FunctionComponent<SubmitButtonsProps<
 
   useEffect(() => {
     for (const url of urls) {
-      const { href } = urlsForRouter(
+      const { href } = makeNextRouterUrls(
         router,
         url,
         basePath,
@@ -126,7 +69,7 @@ export const SubmitButtons: React.FunctionComponent<SubmitButtonsProps<
         const { href, as } =
           nextSlug === undefined
             ? { href: { pathname: undefined }, as: { pathname: undefined } }
-            : urlsForRouter(
+            : makeNextRouterUrls(
                 router,
                 makeUrlFromSlug(router, nextSlug, basePath),
                 basePath,

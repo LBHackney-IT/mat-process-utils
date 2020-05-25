@@ -35,7 +35,8 @@
   },
   "peerDependencies": {
     "next": ">= 9 < 10",
-    "react": ">= 16 < 17"
+    "react": ">= 16 < 17",
+    "styled-jsx": ">= 3 < 4"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -46,8 +47,7 @@
     "querystring": "^0.2.0",
     "react-async-hook": "^3.6.1",
     "react-signature-canvas": "^1.0.3",
-    "remultiform": "^0.2.0",
-    "styled-jsx": "^3.3.0"
+    "remultiform": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -87,6 +87,7 @@
     "rollup-plugin-multi-input": "^1.1.1",
     "rollup-plugin-progress": "^1.1.2",
     "rollup-plugin-typescript2": "^0.27.1",
+    "styled-jsx": "^3.3.0",
     "ts-jest": "^25.5.1",
     "tslib": "^1.13.0",
     "typedoc": "^0.17.7",

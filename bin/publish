@@ -36,7 +36,7 @@ fi
 git checkout "refs/tags/$TAG_NAME"
 
 npm ci
-npm publish
+npm publish --access public
 
 git push origin "refs/tags/$TAG_NAME:refs/tags/$TAG_NAME"
 
